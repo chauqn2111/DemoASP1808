@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Employees>
+	<Employee>
+		<EmpCode>
+			EP1001
+		</EmpCode>
+		<EmpName>
+			Joe
+		</EmpName>
+		<EmpLocation>Đà Nẵng</EmpLocation>
+	</Employee>
+	<Employee>
+		<EmpCode>
+			EP1002
+		</EmpCode>
+		<EmpName>
+			châu
+		</EmpName>
+		<EmpLocation>Quảng nam</EmpLocation>
+	</Employee>
+	<Employee>
+		<EmpCode>
+			EP1003
+		</EmpCode>
+		<EmpName>
+			Nguyễn Thị Lợi
+		</EmpName>
+		<EmpLocation>Đà Nẵng</EmpLocation>
+	</Employee>
+	<Employee>
+		<EmpCode>
+			EP1004
+		</EmpCode>
+		<EmpName>
+			Quang Lê
+		</EmpName>
+		<EmpLocation>Quảng nam</EmpLocation>
+	</Employee>
+</Employees>

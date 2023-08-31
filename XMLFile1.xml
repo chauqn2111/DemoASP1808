@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Employees>
+<Employee>
+	<Empcode>
+		EP1001
+	</Empcode>
+	<EmpName>
+		Joe
+	</EmpName>
+	<Emplocation>Đà Nẵng</Emplocation>
+</Employee>
+<Employee>
+	<Empcode>
+		EP1002
+	</Empcode>
+	<EmpName>
+		châu
+	</EmpName>
+	<Emplocation>Quảng nam</Emplocation>
+</Employee>
+<Employee>
+	<Empcode>
+		EP1004
+	</Empcode>
+	<EmpName>
+		Quang Lê
+	</EmpName>
+	<Emplocation>Quảng nam</Emplocation>
+</Employee>
+</Employees>

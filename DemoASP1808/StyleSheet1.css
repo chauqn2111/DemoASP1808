@@ -1,0 +1,27 @@
+﻿
+/*h2 {*/
+    /*background: linear-gradient(to right,blue,red);*/
+
+    /*animation: blur infinite 5s;
+}*/
+
+
+/*@keyframes blur {
+    0% {
+        transform: rotateZ(0);
+    }
+
+    50% {
+        transform: rotateZ(50000deg);
+        color: red;
+    }
+
+    100% {
+        transform: rotateZ(0);
+        color: blue;
+    }
+}
+h2 {
+    color : blue;
+}
+*/
