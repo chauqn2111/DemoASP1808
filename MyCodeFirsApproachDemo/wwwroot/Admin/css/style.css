@@ -24,6 +24,81 @@ ul li {
     /*list-style:none;*/
 }
 
+
+
+/*input#GioiTinh {
+    margin-bottom: -15px;
+    margin-top: -12px;
+}*/
+a.btn.btn-danger, input.btn.btn-danger {
+    animation: doimauchu 3s infinite;
+}
+a.text-green {
+    color: #34348bbd;
+}
+header.panel-heading {
+    background-color: #ff7f5070;
+}
+.panel-body {
+    background-color: #47c1c92e;
+}
+input.btn.btn-danger {
+    margin-bottom: 10px;
+}
+dd.col-sm-10 {
+    width: 11%;
+}
+dl.row {
+    display: flex;
+}
+@keyframes doimauchu {
+    0% {
+        color: #f1c40f;
+    }
+
+    10% {
+        color: rgb(26, 23, 23);
+    }
+
+    20% {
+        color: #e74c3c;
+    }
+
+    30% {
+        color: #0ed6e8;
+    }
+
+    40% {
+        color: #00f867;
+    }
+
+    50% {
+        color: #412a77;
+    }
+
+    60% {
+        color: #e010f3;
+    }
+
+    70% {
+        color: #2ecc71;
+    }
+
+    80% {
+        color: #f03988;
+    }
+
+    90% {
+        color: coral;
+    }
+
+    100% {
+        color: #9742a0;
+    }
+}
+
+
+
 a,a:hover,a:focus {
     text-decoration:none;
     outline:none;
