@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ReturnUrlParameter = "returnUrl";
 }).AddCookie("Admin", options =>
 {
-    options.LogoutPath = new PathString("/Admin/Account/Login");
+    options.LoginPath = new PathString("/Admin/Account/Login");
 });
 
 // Add services to the container.
@@ -31,27 +33,14 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapAreaControllerRoute(
-        name: "admin",
-areaName: "Admin",
-        pattern: "Admin/{controller=Account}/{action=Index}/{id?}");
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}"
-        );
-});
 
 
+app.MapAreaControllerRoute(
+    name: "admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Account}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-//app.MapControllerRoute(
-//   name: "areas",
-//   pattern: "{area=Admin}/{controller=Account}/{action=Index}/{id?}");
-
-//app.Run();
+app.Run();
