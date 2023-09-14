@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AutomobileLibrary.DataAccess
 {
-    public class KhachHangDao
+    public class HoaDonDao
     {
-        private static KhachHangDao instance = null;
+        private static HoaDonDao instance = null;
         private static readonly object instanceLock = new object();
-        public static KhachHangDao Instance
+        public static HoaDonDao Instance
         {
             //Singlestone pattern
             get
@@ -19,45 +19,51 @@ namespace AutomobileLibrary.DataAccess
                 {
                     if (instance == null)
                     {
-                        instance = new KhachHangDao();
+                        instance = new HoaDonDao();
                     }
                     return instance;
                 }
             }
         }
-        public IEnumerable<KhachHang> RemoveKhachHangSelected(IEnumerable<int> DeleteList)
+        public IEnumerable<HoaDon> RemoveHoaDonSelected(IEnumerable<int> DeleteList)
         {
             using var context = new MyStoreContext();
-            var DeleteCatList = context.KhachHangs.Where(z => DeleteList.Contains(z.MaKhachHang)).ToList();
-            context.KhachHangs.RemoveRange(DeleteCatList);
+            var DeleteCatList = context.HoaDons.Where(z => DeleteList.Contains(z.MaHoaDon)).ToList();
+            context.HoaDons.RemoveRange(DeleteCatList);
             context.SaveChanges();
             return DeleteCatList;
         }
-        public IEnumerable<KhachHang> GetKhachHangList(string sortBy)
+        public IEnumerable<HoaDon> GetHoaDonList(string sortBy)
         {
             using var context = new MyStoreContext();
-            List<KhachHang> model = context.KhachHangs.ToList();
+            List<HoaDon> model = context.HoaDons.ToList();
             try
             {
                 switch (sortBy)
                 {
                     case "id":
-                        model = model.OrderBy(o => o.MaKhachHang).ToList();
+                        model = model.OrderBy(o => o.MaHoaDon).ToList();
                         break;
                     case "iddesc":
-                        model = model.OrderByDescending(o => o.MaKhachHang).ToList();
+                        model = model.OrderByDescending(o => o.MaHoaDon).ToList();
                         break;
-                    case "TenKhachHang":
-                        model = model.OrderBy(o => o.TenKhachHang).ToList();
+                    case "MaNhanVien":
+                        model = model.OrderBy(o => o.MaNhanVien).ToList();
                         break;
-                    case "TenKhachHangdesc":
-                        model = model.OrderByDescending(o => o.TenKhachHang).ToList();
+                    case "MaNhanViendesc":
+                        model = model.OrderByDescending(o => o.MaNhanVien).ToList();
                         break;
-                    case "DiaChi":
-                        model = model.OrderBy(o => o.DiaChi).ToList();
+                    case "NgayBan":
+                        model = model.OrderBy(o => o.NgayBan).ToList();
                         break;
-                    case "DiaChidesc":
-                        model = model.OrderByDescending(o => o.DiaChi).ToList();
+                    case "NgayBandesc":
+                        model = model.OrderByDescending(o => o.NgayBan).ToList();
+                        break;
+                    case "TongTien":
+                        model = model.OrderBy(o => o.TongTien).ToList();
+                        break;
+                    case "TongTiendesc":
+                        model = model.OrderByDescending(o => o.TongTien).ToList();
                         break;
                     default:
                         break;
@@ -85,65 +91,72 @@ namespace AutomobileLibrary.DataAccess
         //    return khachHangs;
         //}
 
-        public KhachHang GetKhachHangByID(int id)
+        public HoaDon GetHoaDonByID(int id)
         {
-            KhachHang kh = null;
+            HoaDon hd = null;
             try
             {
                 using var context = new MyStoreContext();
-                kh = context.KhachHangs.SingleOrDefault(k => k.MaKhachHang == id);
+                hd = context.HoaDons.SingleOrDefault(k => k.MaHoaDon == id);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return kh;
+            return hd;
         }
 
-        public IEnumerable<KhachHang> GetKhachHangBySearchName(string name, string CityName, string sortBy)
+        public IEnumerable<HoaDon> GetHoaDonBySearchName(string name, string sortBy)
         {
             var context = new MyStoreContext();
             /*var khachHangs = new List<KhachHang>();*/
             //IQueryable<KhachHang> model = context.KhachHangs;
-            List<KhachHang> model = context.KhachHangs.ToList();
+            List<HoaDon> model = context.HoaDons.ToList();
             try
             {
                 if (!String.IsNullOrEmpty(name))
                 {
-                    model = model.Where(x => x.TenKhachHang.ToLower().Contains(name)).ToList();
-                }
-                if (!String.IsNullOrEmpty(CityName))
-                {
-                    model = model.Where(x => x.DiaChi.ToLower().Contains(CityName)).ToList();
-                }
+                    //model = model.Where(x => x.MaNhanVien.ToLower().Contains(name)).ToList();
                     switch (sortBy)
                     {
                         case "id":
-                            model = model.OrderBy(o => o.MaKhachHang).ToList();
+                            model = model.OrderBy(o => o.MaHoaDon).ToList();
                             break;
                         case "iddesc":
+                            model = model.OrderByDescending(o => o.MaHoaDon).ToList();
+                            break;
+                        case "MaNhanVien":
+                            model = model.OrderBy(o => o.MaNhanVien).ToList();
+                            break;
+                        case "MaNhanViendesc":
+                            model = model.OrderByDescending(o => o.MaNhanVien).ToList();
+                            break;
+                        case "NgayBan":
+                            model = model.OrderBy(o => o.NgayBan).ToList();
+                            break;
+                        case "NgayBandesc":
+                            model = model.OrderByDescending(o => o.NgayBan).ToList();
+                            break;
+                        case "MaKhachHang":
+                            model = model.OrderBy(o => o.MaKhachHang).ToList();
+                            break;
+                        case "MaKhachHangdesc":
                             model = model.OrderByDescending(o => o.MaKhachHang).ToList();
                             break;
-                        case "TenKhachHang":
-                            model = model.OrderBy(o => o.TenKhachHang).ToList();
+                        case "TongTien":
+                            model = model.OrderBy(o => o.TongTien).ToList();
                             break;
-                        case "TenKhachHangdesc":
-                            model = model.OrderByDescending(o => o.TenKhachHang).ToList();
-                            break;
-                        case "DiaChi":
-                            model = model.OrderBy(o => o.DiaChi).ToList();
-                            break;
-                        case "DiaChidesc":
-                            model = model.OrderByDescending(o => o.DiaChi).ToList();
+                        case "TongTiendesc":
+                            model = model.OrderByDescending(o => o.TongTien).ToList();
                             break;
                         default:
                             break;
                     }
-                
-                //else
-                //{
-                //    return model;
-                //}
+                }
+                else
+                {
+                    return model;
+                }
             }
             catch (Exception ex)
             {
@@ -152,16 +165,16 @@ namespace AutomobileLibrary.DataAccess
             return model;
         }
 
-        public void AddNew(KhachHang kh)
+        public void AddNew(HoaDon hd)
         {
 
             try
             {
-                KhachHang _kh = GetKhachHangByID(kh.MaKhachHang);
-                if (_kh == null)
+                HoaDon _hd = GetHoaDonByID(hd.MaHoaDon);
+                if (_hd == null)
                 {
                     using var context = new MyStoreContext();
-                    context.KhachHangs.Add(kh);
+                    context.HoaDons.Add(hd);
                     context.SaveChanges();
                 }
                 else
@@ -175,16 +188,16 @@ namespace AutomobileLibrary.DataAccess
             }
         }
 
-        public void Update(KhachHang kh)
+        public void Update(HoaDon hd)
         {
 
             try
             {
-                KhachHang _kh = GetKhachHangByID(kh.MaKhachHang);
-                if (_kh != null)
+                HoaDon _hd = GetHoaDonByID(hd.MaHoaDon);
+                if (_hd != null)
                 {
                     using var context = new MyStoreContext();
-                    context.KhachHangs.Update(kh);
+                    context.HoaDons.Update(hd);
                     context.SaveChanges();
                 }
                 else
@@ -202,11 +215,11 @@ namespace AutomobileLibrary.DataAccess
         {
             try
             {
-                KhachHang _kh = GetKhachHangByID(id);
-                if (_kh != null)
+                HoaDon _hd = GetHoaDonByID(id);
+                if (_hd != null)
                 {
                     using var context = new MyStoreContext();
-                    context.KhachHangs.Remove(_kh);
+                    context.HoaDons.Remove(_hd);
                     context.SaveChanges();
                 }
                 else

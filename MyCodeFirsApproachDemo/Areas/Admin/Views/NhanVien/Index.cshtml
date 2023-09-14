@@ -2,16 +2,16 @@
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản Lý Nhân Viên";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<<header class="panel-heading">
-    Quản lý Nhan Vien
+<header class="panel-heading">
+    Quản lý Nhân Viên
 </header>
 <div class="panel-body">
     <p>
-    @Html.ActionLink("Create New","Create","NhanVien", null, new {@class="btn btn-danger"})
+    @Html.ActionLink("Thêm Mới","Create","NhanVien", null, new {@class="btn btn-danger"})
     </p>
     <div class="text-align">
     @if (TempData["Message"] != null)
@@ -38,7 +38,7 @@
         </div>
         @using (Html.BeginForm("DeleteMultiple", "NhanVien", FormMethod.Post))
         {
-        <div class="form-group">
+            <div class="form-group">
             <table class="table table-striped">
                 
                 <thead>
@@ -117,12 +117,25 @@
                                     @Html.DisplayFor(modelItem => item.DienThoai)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.GioiTinh)
+                                    @{
+                                    var gender = item.GioiTinh;
+                                    var icon = "";
+                                    if (gender)
+                                    {
+                                        icon = "male";
+                                    }
+                                    else
+                                    {
+                                        icon = "female";
+                                    }
+                                    }
+                                    <i class="fa fa-@icon"></i>
+                                    @* @(item.GioiTinh?"Nam":"Nữ") *@
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new {  id=item.MaNhanVien  },new {@class="text-danger"}) |
-                                    @Html.ActionLink("Details", "Details", new {  id=item.MaNhanVien},new {@class="text-green" })  |
-                                    @Html.ActionLink("Delete", "Delete", new {id=item.MaNhanVien },new {@class="text-danger"})
+                                    @Html.ActionLink("Sửa", "Edit", new {  id=item.MaNhanVien  },new {@class="text-danger"}) |
+                                    @Html.ActionLink("Chi Tiết", "Details", new {  id=item.MaNhanVien},new {@class="text-green" })  |
+                                    @Html.ActionLink("Xóa", "Delete", new {id=item.MaNhanVien },new {@class="text-danger"})
                                     <input type="checkbox" name="SelectedCatDelete" value="@item.MaNhanVien">
                                 </td>
                             </tr>

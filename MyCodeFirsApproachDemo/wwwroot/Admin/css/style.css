@@ -24,12 +24,20 @@ ul li {
     /*list-style:none;*/
 }
 
+<<<<<<< HEAD
+=======
 
 
 /*input#GioiTinh {
     margin-bottom: -15px;
     margin-top: -12px;
 }*/
+i.fa.fa-male, i.fa.fa-female {
+    font-size: x-large;
+}
+thead {
+    background-color: #00c0ff59;
+}
 a.btn.btn-danger, input.btn.btn-danger {
     animation: doimauchu 3s infinite;
 }
@@ -45,12 +53,12 @@ header.panel-heading {
 input.btn.btn-danger {
     margin-bottom: 10px;
 }
-dd.col-sm-10 {
+/*dd.col-sm-10 {
     width: 11%;
 }
 dl.row {
     display: flex;
-}
+}*/
 @keyframes doimauchu {
     0% {
         color: #f1c40f;
@@ -99,6 +107,7 @@ dl.row {
 
 
 
+>>>>>>> 69ac4e2 (xog-hoadon)
 a,a:hover,a:focus {
     text-decoration:none;
     outline:none;

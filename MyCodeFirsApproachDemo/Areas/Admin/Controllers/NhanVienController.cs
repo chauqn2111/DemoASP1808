@@ -12,7 +12,7 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
         INhanVienRepository nhanVienRepository = null;
         public NhanVienController() => nhanVienRepository = new NhanVienRepository();
         // GET: NhanVienController1
-        [HttpGet]
+        
         public ActionResult Index(string searchString, int? page, string sortBy)
         {
             var nhanVienList = nhanVienRepository.GetNhanViens(sortBy).ToPagedList(page ?? 1, 5);
@@ -28,7 +28,8 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
         // GET: NhanVienController1/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var nv = nhanVienRepository.GetNhanVienByID(id);
+            return View(nv);
         }
 
         // GET: NhanVienController1/Create
@@ -44,14 +45,23 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
         {
             try
             {
-                nhanVienRepository.InsertNhanVien(nv);
-                TempData["Message"] = "Tạo mới thành công";
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    nhanVienRepository.InsertNhanVien(nv);
+                    TempData["Message"] = "Tạo mới thành công";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Tạo mới nhân viên không thành công");
+                }
             }
+
             catch
             {
-                return View();
+                
             }
+            return View();
         }
 
         // GET: NhanVienController1/Edit/5
@@ -81,7 +91,8 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
         // GET: NhanVienController1/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var nhanVienList = nhanVienRepository.GetNhanVienByID(id);
+            return View(nhanVienList);
         }
 
         // POST: NhanVienController1/Delete/5

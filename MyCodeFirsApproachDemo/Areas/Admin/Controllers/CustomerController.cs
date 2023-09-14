@@ -2,6 +2,7 @@
 using AutomobileLibrary.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
@@ -82,7 +83,8 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
         // GET: CustomerController1/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var khachHangList = khachHangRepository.GetKhachHangByID(id);
+            return View(khachHangList);
         }
 
         // POST: CustomerController1/Delete/5
@@ -102,15 +104,25 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
             }
         }
         [HttpGet]
-        public ActionResult Index(string searchString, int? page, string sortBy)
+        public ActionResult Index(string searchString, string CityName , int? page, string sortBy)
         {
-            var khachHangList = khachHangRepository.GetKhachHangs(sortBy).ToPagedList(page ?? 1, 5);
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                searchString = searchString.ToLower();
-                khachHangList = khachHangRepository.GetKhachHangByName(searchString, sortBy).ToPagedList(page ?? 1, 5);
-            }
+            //var khachHangList = khachHangRepository.GetKhachHangs(sortBy).ToPagedList(page ?? 1, 5);
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    searchString = searchString.ToLower();
+            //    khachHangList = khachHangRepository.GetKhachHangByName(searchString, sortBy).ToPagedList(page ?? 1, 5);
+            //}
+            var khachHangList = khachHangRepository.GetKhachHangByName(searchString is null?null: searchString, CityName is null? null: CityName.ToLower(), sortBy).ToPagedList(page ?? 1,5);
             //TempData["searchString"] = searchString;
+            var citys = new List<SelectListItem>
+            {
+                new SelectListItem {Value = "1", Text = "Đà Nẵng"},
+                new SelectListItem {Value = "2", Text = "Quảng Nam"},
+                new SelectListItem {Value = "3", Text = "HCM"},
+                new SelectListItem {Value = "4", Text = "Hà Nội"},
+                new SelectListItem {Value = "5", Text = "Hải Phòng"},
+            };
+            ViewBag.City = citys;
             return View(khachHangList);
         }
         [HttpPost]

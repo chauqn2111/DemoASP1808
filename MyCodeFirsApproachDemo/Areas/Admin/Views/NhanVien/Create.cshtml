@@ -1,27 +1,28 @@
 ﻿@model AutomobileLibrary.DataAccess.NhanVien
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm Nhân Viên";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Thêm Mới</h1>
 
-<h4>NhanVien</h4>
+<h4>Nhân Viên</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Create", "NhanVien", FormMethod.Post))
         {
-            
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
                 <div class="form-group">
                     <label asp-for="TenNhanVien" class="control-label"></label>
 
-                    @Html.EditorFor(model=>model.TenNhanVien,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên nhan viên"} })
+                    @Html.EditorFor(model=>model.TenNhanVien,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên nhân viên"} })
                     <span asp-validation-for="TenNhanVien" class="text-danger"></span>
+                    @Html.ValidationMessageFor(model => model.TenNhanVien, "",new {@class = "text-danger"})
                 </div>
                 @* <div class="form-group form-check">
                     <label class="form-check-label">
@@ -32,21 +33,37 @@
                     <label asp-for="DiaChi" class="control-label"></label>
                     @Html.EditorFor(model=>model.DiaChi,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập địa chỉ"} })
                     <span asp-validation-for="DiaChi" class="text-danger"></span>
+                    @Html.ValidationMessageFor(model => model.DiaChi, "",new {@class = "text-danger"})
                 </div>
                 <div class="form-group">
                     <label asp-for="DienThoai" class="control-label"></label>
                     @Html.EditorFor(model=>model.DienThoai,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập điện thoại"} })
                     <span asp-validation-for="DienThoai" class="text-danger"></span>
+                    @Html.ValidationMessageFor(model => model.DienThoai, "",new {@class = "text-danger"})
                 </div>
-                <div class="form-group">
-                    <label asp-for="GioiTinh" class="control-label"></label>
+                @* <div class="form-group">
+                    <label asp-for="GioiTinh" class="control-label"> Giới Tính</label>
                 @Html.EditorFor(model=>model.GioiTinh,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập giới tính"} })
                 <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                @Html.ValidationMessageFor(model => model.GioiTinh, "",new {@class = "text-danger"})
+                </div> *@
+                <div class="form-group">
+                    <label>@Html.DisplayNameFor(model => model.GioiTinh)</label>
+                    <div>
+                        @Html.RadioButtonFor(model => model.GioiTinh, true, new { id = "nam" })
+                        <label for="nam">Nam</label>
+                        @Html.RadioButtonFor(model => model.GioiTinh, false, new { id = "nu" })
+                        <label for="nu">Nữ</label>
+                        <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                     </div>
+                     @Html.ValidationMessageFor(model => model.GioiTinh, "",new {@class = "text-danger"})
                 </div>
                 <div class="form-group">
                     <label asp-for="NgaySinh" class="control-label"></label>
                     @Html.EditorFor(model=>model.NgaySinh,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập ngày sinh"} })
+                @* @Convert.ToDateTime(model.NgaySinh).ToString("dd/MM/yyyy") *@
                     <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                @Html.ValidationMessageFor(model => model.NgaySinh, "",new {@class = "text-danger"})
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
@@ -56,7 +73,7 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back To List","Index", "NhanVien", null, new {@class="btn btn-danger"} )
+    @Html.ActionLink("Quay Lại","Index", "NhanVien", null, new {@class="btn btn-danger"} )
 </div>
 
 @section Scripts {

@@ -13,7 +13,7 @@
 <div class="panel-body">
 
     <p>
-        @Html.ActionLink("Create New","Create","Customer", null, new {@class="btn btn-danger"})
+        @Html.ActionLink("Thêm Mới","Create","Customer", null, new {@class="btn btn-danger"})
     </p>
     <div class="text-align">
         @if (TempData["Message"] != null)
@@ -28,11 +28,19 @@
         <div class="form-group mb-4">
         @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
         {
-                <div class="row col-lg-6">
+                <div class="row col-lg-4">
                 @Html.TextBox("SearchString", TempData["searchString"], null, new {@class="form-control", @placeholder="Nhập từ khoá cần tìm kiếm"})
             </div>
-
-            <div class="col-lg-6">
+            <div class="row col-lg-4">
+                <select id="CityId" name="CityName" class="form-control">
+                    <option value="">-- Select City --</option>
+                        @foreach (var city in ViewBag.City as List<SelectListItem>)
+                        {
+                            <option value="@city.Text">@city.Text</option>
+                        }
+                    </select>
+            </div>
+            <div class="col-lg-2">
                 <input type="submit" class="btn btn-danger" value="Tìm kiếm" />
             </div
             <div style="clear: both"></div>
@@ -99,8 +107,8 @@
                                 </td>
                                 <td>
                                     @Html.ActionLink("Sữa", "Edit", new {  id=item.MaKhachHang  },new {@class="text-danger"}) |
-                                    @Html.ActionLink("Details", "Details", new {  id=item.MaKhachHang},new {@class="text-green" }) |
-                                    @Html.ActionLink("Delete", "Delete", new {id=item.MaKhachHang },new {@class="text-danger"})
+                                    @Html.ActionLink("Chi Tiết", "Details", new {  id=item.MaKhachHang},new {@class="text-green" }) |
+                                    @Html.ActionLink("Xóa", "Delete", new {id=item.MaKhachHang },new {@class="text-danger"})
                                     <input type="checkbox" name="SelectedCatDelete" value="@item.MaKhachHang">
                                 </td>
                             </tr>
