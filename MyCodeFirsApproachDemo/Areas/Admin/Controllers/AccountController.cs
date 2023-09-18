@@ -11,17 +11,21 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
     public class AccountController : Controller
     {
 
-            public IActionResult Login()
+            public IActionResult Index()
             {
                 ViewData["Title"] = "Đăng nhập";
-                return View();
+                return RedirectToAction("Login", "Account", new { Areas = "Admin" });   
             }
 
 
+        public IActionResult Login()
+        {
+ 
+            return View();
+        }
 
 
-
-            [HttpPost]
+        [HttpPost]
             [AllowAnonymous]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> Login(LoginModel model)
@@ -59,7 +63,7 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
                     var routeValues = new RouteValueDictionary
                 {
                     {"area","Admin" },
-                    {"claimType","AdminClaim" },
+                    {"returnURL",Request.Query["ReturnUrl"] },
                     {"claimValue","true" }
                 };
                     return RedirectToAction("Index", "Home", routeValues);// RedirectToAction("Index", "Home");
@@ -72,7 +76,7 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
             {
 
                 // Đăng xuất người dùng
-                await HttpContext.SignOutAsync();
+                await HttpContext.SignOutAsync("Admin");
 
                 // Chuyển hướng đến trang đăng nhập hoặc trang chính
                 return RedirectToAction("Index", "Account", new { Area = "Admin" }); // Thay thế bằng tên trang đăng nhập hoặc trang chính của bạn

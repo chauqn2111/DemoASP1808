@@ -11,7 +11,11 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 
             public IActionResult Index()
             {
-                return View();
+            if (!string.IsNullOrEmpty(Request.Query["ReturnUrl"]))
+            {
+                return Redirect("" + Request.Query["ReturnUrl"]);
+            }
+            return View();
             }
         
     }

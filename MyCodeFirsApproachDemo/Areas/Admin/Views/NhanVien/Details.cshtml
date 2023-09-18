@@ -47,7 +47,9 @@
             @Html.DisplayNameFor(model => model.NgaySinh)
         </dt>
         <dd class = "col-sm-10">
-            @Html.EditorFor(model => model.NgaySinh)
+           @* @Model.NgaySinh *@
+            @Html.DisplayFor(model => model.NgaySinh)
+    
             
         </dd>
     </dl>

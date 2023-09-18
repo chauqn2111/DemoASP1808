@@ -131,6 +131,7 @@
                                     }
                                     <i class="fa fa-@icon"></i>
                                     @* @(item.GioiTinh?"Nam":"Nữ") *@
+                                    <a href="#" class="btn @(item.GioiTinh ? "btn-warning":"btn-primary") btn-active" data-id="@item.MaNhanVien">@(item.GioiTinh ? "Nam" : "Nữ")</a>
                                 </td>
                                 <td>
                                     @Html.ActionLink("Sửa", "Edit", new {  id=item.MaNhanVien  },new {@class="text-danger"}) |
@@ -156,3 +157,15 @@
     </div>
     
 </div> 
+@section Scripts{
+     <script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+     <script src="~/admin/js/controller/nhanviencontroller.js"></script>
+     <Script>
+
+
+        $('#CityId').on('change', function(event){
+    var form = $(event.target).parents('form');
+    form.submit();
+    });
+    </Script> 
+}

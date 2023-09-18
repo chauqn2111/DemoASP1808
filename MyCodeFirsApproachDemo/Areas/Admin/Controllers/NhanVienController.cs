@@ -1,5 +1,6 @@
 ﻿using AutomobileLibrary.DataAccess;
 using AutomobileLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
@@ -7,12 +8,14 @@ using X.PagedList;
 namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class NhanVienController : Controller
+    [Authorize(Roles = "Admin,User")]
+    [Authorize(AuthenticationSchemes = "Admin")]
+    public class NhanVienController : BaseController
     {
         INhanVienRepository nhanVienRepository = null;
         public NhanVienController() => nhanVienRepository = new NhanVienRepository();
         // GET: NhanVienController1
-        
+
         public ActionResult Index(string searchString, int? page, string sortBy)
         {
             var nhanVienList = nhanVienRepository.GetNhanViens(sortBy).ToPagedList(page ?? 1, 5);
@@ -59,7 +62,7 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 
             catch
             {
-                
+
             }
             return View();
         }
@@ -118,5 +121,15 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
             TempData["Message"] = $"Xoá {SelectedCatDelete.Count()} thàng thành công";
             return RedirectToAction("Index");
         }
-    }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new NhanVienDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
+    }   
 }

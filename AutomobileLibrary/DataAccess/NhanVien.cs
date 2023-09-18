@@ -26,9 +26,10 @@ namespace AutomobileLibrary.DataAccess
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\d{10,}$",ErrorMessage ="Số điện thoại hợp lệ")]
         public string? DienThoai { get; set; }
+
         [Display(Name = "Ngày Sinh")]
         [Required(ErrorMessage = "Yêu Cầu Nhập Ngày Sinh Nhân Viên")]
-        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy")]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
         public DateTime NgaySinh { get; set; }
 

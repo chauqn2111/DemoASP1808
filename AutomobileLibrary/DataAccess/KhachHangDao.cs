@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using X.PagedList;
 
 namespace AutomobileLibrary.DataAccess
 {
@@ -100,7 +101,7 @@ namespace AutomobileLibrary.DataAccess
             return kh;
         }
 
-        public IEnumerable<KhachHang> GetKhachHangBySearchName(string name, string CityName, string sortBy)
+        public IEnumerable<KhachHang> GetKhachHangBySearchName(string name, string sortBy, string CityName)
         {
             var context = new MyStoreContext();
             /*var khachHangs = new List<KhachHang>();*/
@@ -118,6 +119,7 @@ namespace AutomobileLibrary.DataAccess
                 }
                     switch (sortBy)
                     {
+
                         case "id":
                             model = model.OrderBy(o => o.MaKhachHang).ToList();
                             break;

@@ -1,5 +1,6 @@
 ﻿using AutomobileLibrary.DataAccess;
 using AutomobileLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
@@ -7,6 +8,8 @@ using X.PagedList;
 namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,User")]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class HoaDonController : Controller
     {
         IHoaDonRepository hoaDonRepository = null;
