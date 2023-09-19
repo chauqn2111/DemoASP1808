@@ -11,16 +11,16 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
     public class AccountController : Controller
     {
 
-            public IActionResult Index()
-            {
-                ViewData["Title"] = "Đăng nhập";
-                return RedirectToAction("Login", "Account", new { Areas = "Admin" });   
-            }
+        public IActionResult Index()
+        {
+            ViewData["Title"] = "Đăng nhập";
+            return RedirectToAction("Login", "Account", new { Areas = "Admin" });
+        }
 
 
         public IActionResult Login()
         {
- 
+            ViewData["Title"] = "Đăng nhập";
             return View();
         }
 

@@ -9,14 +9,13 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
     public class HomeController : Controller
     {
 
-            public IActionResult Index()
-            {
+        public IActionResult Index()
+        {
             if (!string.IsNullOrEmpty(Request.Query["ReturnUrl"]))
             {
                 return Redirect("" + Request.Query["ReturnUrl"]);
             }
             return View();
-            }
-        
+        }
     }
 }

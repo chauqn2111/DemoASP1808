@@ -1,4 +1,5 @@
 ﻿using AutomobileLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyCodeFirsApproachDemo.Areas.Admin.Models;
@@ -7,6 +8,8 @@ using X.PagedList;
 namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class UserController : Controller
     {
         INguoiDungRepository nguoiDungRepository = null;
