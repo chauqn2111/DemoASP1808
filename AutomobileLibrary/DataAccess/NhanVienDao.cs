@@ -25,14 +25,7 @@ namespace AutomobileLibrary.DataAccess
                 }
             }
         }
-        public IEnumerable<NhanVien> RemoveNhanVienSelected(IEnumerable<int> DeleteList)
-        {
-            using var context = new MyStoreContext();
-            var DeleteCatList = context.NhanViens.Where(z => DeleteList.Contains(z.MaNhanVien)).ToList();
-            context.NhanViens.RemoveRange(DeleteCatList);
-            context.SaveChanges();
-            return DeleteCatList;
-        }
+        
         public IEnumerable<NhanVien> GetNhanVienList(string sortBy)
         {
             using var context = new MyStoreContext();
@@ -47,10 +40,10 @@ namespace AutomobileLibrary.DataAccess
                     case "iddesc":
                         model = model.OrderByDescending(o => o.MaNhanVien).ToList();
                         break;
-                    case "MaNhanVien":
+                    case "TenNhanVien":
                         model = model.OrderBy(o => o.TenNhanVien).ToList();
                         break;
-                    case "TenNhanVien":
+                    case "TenNhanViendesc":
                         model = model.OrderByDescending(o => o.TenNhanVien).ToList();
                         break;
                     case "DiaChi":
@@ -76,20 +69,7 @@ namespace AutomobileLibrary.DataAccess
             return model;
         }
 
-        //public IEnumerable<KhachHang> GetKhachHangList()
-        //{
-        //    var khachHangs = new List<KhachHang>();
-        //    try
-        //    {
-        //        using var context = new MyStoreContext();
-        //        khachHangs = context.KhachHangs.ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //    return khachHangs;
-        //}
+        
 
         public NhanVien GetNhanVienByID(int id)
         {
@@ -109,8 +89,7 @@ namespace AutomobileLibrary.DataAccess
         public IEnumerable<NhanVien> GetNhanVienBySearchName(string name, string sortBy)
         {
             var context = new MyStoreContext();
-            /*var khachHangs = new List<KhachHang>();*/
-            //IQueryable<KhachHang> model = context.KhachHangs;
+            
             List<NhanVien> model = context.NhanViens.ToList();
             try
             {
@@ -197,7 +176,7 @@ namespace AutomobileLibrary.DataAccess
                 }
                 else
                 {
-                    throw new Exception("This Customer does not already exist.");
+                    throw new Exception("This Nhan Vien does not already exist.");
                 }
             }
             catch (Exception ex)
@@ -226,6 +205,23 @@ namespace AutomobileLibrary.DataAccess
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public IEnumerable<NhanVien> RemoveNhanVienSelected(IEnumerable<int> DeleteList)
+        {
+            using var context = new MyStoreContext();
+            var DeleteCatList = context.NhanViens.Where(z => DeleteList.Contains(z.MaNhanVien)).ToList();
+            context.NhanViens.RemoveRange(DeleteCatList);
+            context.SaveChanges();
+            return DeleteCatList;
+        }
+        public bool ChangeStatus(int id)
+        {
+            using var context = new MyStoreContext();
+            var nv = context.NhanViens.Find(id);
+            nv.GioiTinh = !nv.GioiTinh;
+            //context.NhanViens.Update(nv);
+            context.SaveChanges();
+            return nv.GioiTinh;
         }
     }
 }

@@ -1,14 +1,21 @@
 ﻿using AutomobileLibrary.DataAccess;
 using AutomobileLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Text;
 using X.PagedList;
 
 namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
-    public class CustomerController : Controller
+    [Authorize(Roles ="Admin")]
+    [Authorize(AuthenticationSchemes ="Admin")]
+    public class CustomerController : BaseController
     {
         IKhachHangRepository khachHangRepository = null;
         public CustomerController() => khachHangRepository = new KhachHangRepository();
@@ -40,19 +47,29 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 
         // POST: CustomerController1/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create(KhachHang kh)
         {
             try
             {
-                khachHangRepository.InsertKhachHang(kh);
-                TempData["Message"] = "Tạo mới thành công";
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    khachHangRepository.InsertKhachHang(kh);
+                    //TempData["Message"] = "Tạo mới thành công";
+                    //TempData["AlertType"] = "alert-danger";
+                    SetAlert("Tạo mới thành công", "error");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Tạo mới khách hàng không thành công");
+                }
             }
             catch
             {
-                return View();
+
             }
+            return View(kh);
         }
 
         // GET: CustomerController1/Edit/5
@@ -70,7 +87,7 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
             try
             {
                 khachHangRepository.UpdateKhachHang(kh);
-                TempData["Message"] = "Cập nhật thành công";
+                SetAlert("Cập nhật thành công", "error");
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -82,7 +99,8 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
         // GET: CustomerController1/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var khachHangList = khachHangRepository.GetKhachHangByID(id);
+            return View(khachHangList);
         }
 
         // POST: CustomerController1/Delete/5
@@ -93,7 +111,7 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
             try
             {
                 khachHangRepository.DeleteKhachHang(id);
-                TempData["Message"] = "Xoá thành công";
+                SetAlert("Xóa thành công", "error");
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -101,16 +119,50 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
                 return View();
             }
         }
-        [HttpGet]
-        public ActionResult Index(string searchString, int? page, string sortBy)
+
+        [HttpPost]
+        public JsonResult DeleteId(int id)
         {
-            var khachHangList = khachHangRepository.GetKhachHangs(sortBy).ToPagedList(page ?? 1, 5);
-            if (!string.IsNullOrEmpty(searchString))
+            try
             {
-                searchString = searchString.ToLower();
-                khachHangList = khachHangRepository.GetKhachHangByName(searchString, sortBy).ToPagedList(page ?? 1, 5);
+                var record = khachHangRepository.GetKhachHangByID(id);
+                if (record == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy bản ghi" });
+                }
+                khachHangRepository.DeleteKhachHang(id);
+                SetAlert("Xoá thành công", "error");
+                /*return Json(new { success = true, id = id});*/
+                return Json(new
+                {
+                    status = true
+                });
             }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpGet]
+        public ActionResult Index(string searchString, string CityName , string sortBy, int? page)
+        {
+            //var khachHangList = khachHangRepository.GetKhachHangs(sortBy).ToPagedList(page ?? 1, 5);
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    searchString = searchString.ToLower();
+            //    khachHangList = khachHangRepository.GetKhachHangByName(searchString, sortBy).ToPagedList(page ?? 1, 5);
+            //}
+            var khachHangList = khachHangRepository.GetKhachHangByName(searchString is null?null: searchString.ToLower(), sortBy, CityName is null ? null : CityName.ToLower()).ToPagedList(page ?? 1,5);
             //TempData["searchString"] = searchString;
+            var citys = new List<SelectListItem>
+            {
+                new SelectListItem {Value = "1", Text = "Đà Nẵng"},
+                new SelectListItem {Value = "2", Text = "Quảng Nam"},
+                new SelectListItem {Value = "3", Text = "HCM"},
+                new SelectListItem {Value = "4", Text = "Hà Nội"},
+                new SelectListItem {Value = "5", Text = "Hải Phòng"},
+            };
+            ViewBag.City = citys;
             return View(khachHangList);
         }
         [HttpPost]
@@ -119,6 +171,23 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
             khachHangRepository.DeleteSelectedKhachHang(SelectedCatDelete);
             TempData["Message"] = $"Xoá {SelectedCatDelete.Count()} thàng thành công";
             return RedirectToAction("Index");
+        }
+        public JsonResult ListName(string q)
+        {
+            if (!string.IsNullOrEmpty(q))
+            {
+                var data = khachHangRepository.GetKhachHangByName(q.ToLower(), "", "");
+                var responseData = data.Select(kh => kh.TenKhachHang).ToList();
+                return Json(new
+                {
+                    data = responseData,
+                    status = true
+                });
+            }
+            return Json(new
+            {
+                status = false
+            });
         }
     }
 }

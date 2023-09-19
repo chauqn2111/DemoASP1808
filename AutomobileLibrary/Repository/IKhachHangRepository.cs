@@ -10,7 +10,7 @@ namespace AutomobileLibrary.Repository
     public interface IKhachHangRepository
     {
         IEnumerable<KhachHang> GetKhachHangs(string sortBy);
-        IEnumerable<KhachHang> GetKhachHangByName(string name, string sortBy);
+        IEnumerable<KhachHang> GetKhachHangByName(string name, string sortBy, string CityName);
         KhachHang GetKhachHangByID(int id);
         void InsertKhachHang(KhachHang kh);
         void UpdateKhachHang(KhachHang kh);

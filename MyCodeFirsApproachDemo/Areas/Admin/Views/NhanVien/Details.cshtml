@@ -1,14 +1,15 @@
 ﻿@model AutomobileLibrary.DataAccess.NhanVien
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Xóa</h1>
+<header class="panel-heading">
+    Thông tin Nhân viên
+</header>
 
-<h3>Bạn Có Chắc Chắn Muốn Xóa Thông Tin Này?</h3>
-<div>
+<div panel-body>
     <h4>Nhân Viên</h4>
     <hr />
     <dl class="row">
@@ -46,13 +47,20 @@
             @Html.DisplayNameFor(model => model.NgaySinh)
         </dt>
         <dd class = "col-sm-10">
-            @Html.EditorFor(model => model.NgaySinh, new {htmlAttributes= new{@class="form-control", /* @placeholder="Mời Nhập Ngày Sinh" */}})
+           @* @Model.NgaySinh *@
+            @Html.DisplayFor(model => model.NgaySinh)
+    
+            
         </dd>
     </dl>
-    
-    @using (Html.BeginForm("Delete", "NhanVien", FormMethod.Post))
-    {
-        <input type="submit" value="Delete" class="btn btn-danger" />
-    }
+
+<div>
+    @Html.ActionLink("Sửa", "Edit", "NhanVien", null, new  {@class="btn btn-danger"} ) 
     @Html.ActionLink("Quay Lại","Index", "NhanVien", null, new {@class="btn btn-danger"} )
 </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
