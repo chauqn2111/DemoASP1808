@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyCodeFirsApproachDemo.Models;
 using System.Security.Claims;
+using static MyCodeFirsApproachDemo.Areas.Admin.Models.LoaiNguoiDung;
 
 namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 {
@@ -10,7 +11,6 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-
         public IActionResult Index()
         {
             ViewData["Title"] = "Đăng nhập";
@@ -20,6 +20,11 @@ namespace MyCodeFirsApproachDemo.Areas.Admin.Controllers
 
         public IActionResult Login()
         {
+            string returnURL = Request.Query["ReturnUrl"].ToString();
+            if (returnURL == "/")
+            {
+                return RedirectToAction("Login", "Account", new { Areas = "Admin" });
+            }
             ViewData["Title"] = "Đăng nhập";
             return View();
         }

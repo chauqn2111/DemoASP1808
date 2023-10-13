@@ -11,7 +11,7 @@ namespace AutomobileLibrary.DataAccess
         public string TenDangNhap { get; set; } 
         [Display(Name = "Mật Khẩu")]
         [Required(ErrorMessage = "Yêu Cầu Nhập Mật Khẩu")]
-        public string MatKhau { get; set; } = null!;
+        public string MatKhau { get; set; } 
         [Display(Name = "Loại Người Dùng")]
         [Required(ErrorMessage = "Yêu Cầu Nhập Loại Người Dùng")]
         public int LoaiNguoiDung { get; set; }

@@ -21,7 +21,7 @@
                 <span>Quản lý</span>
             </a>
             <ul class="sub">
-                <li><a href="#"><i class="fa fa-folder-o"></i> Quản lý Sản phẩm</a></li>
+                <li><a href="@Url.Action("Index", "Product")"><i class="fa fa-folder-o"></i> Quản lý Sản Phẩm</a></li>
                 <li><a href="#"><i class="fa fa-folder-o"></i> Quản lý Người dùng</a></li>
                 <li><a href="@Url.Action("Index", "Customer")"><i class="fa fa-folder-o"></i> Quản lý Khách hàng</a></li>
                 <li><a href="@Url.Action("Index", "NhanVien")"><i class="fa fa-folder-o"></i> Quản lý Nhân Viên</a></li>
@@ -40,4 +40,9 @@
             </ul>
         </li>
     </ul>
+    <div class="buton_Back_Forward">
+        <button onclick="history.back()">Go Back</button>
+        <button onclick="history.forward()">Go Forward</button>
+    </div>
 </div>
+

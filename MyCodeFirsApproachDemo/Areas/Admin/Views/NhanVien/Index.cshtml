@@ -14,13 +14,16 @@
     @Html.ActionLink("Thêm Mới","Create","NhanVien", null, new {@class="btn btn-danger"})
     </p>
     <div class="text-align">
-    @if (TempData["Message"] != null)
-    {
-        <div class="alert alert-danger">
+        @if (TempData["AlertMessage"] != null)
+        {
+            
 
-            @TempData["Message"]
-        </div>
-    }
+                <div id="AlertBox" class="alert @TempData["AlertType"]">
+
+                @TempData["AlertMessage"]
+                </div>
+            
+        }
     </div>
     <div class="row form-body">
         <div class="form-group mb-4">
@@ -158,8 +161,11 @@
     
 </div> 
 @section Scripts{
+    @{
+        DateTime crurenDate = DateTime.Now;
+    }
      <script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
-     <script src="~/admin/js/controller/nhanviencontroller.js"></script>
+     <script src="~/admin/js/controller/nhanviencontroller.js?@crurenDate"></script>
      <Script>
 
 
