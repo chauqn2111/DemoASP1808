@@ -9,7 +9,7 @@ namespace AutomobileLibrary.Repository
 {
     public interface INguoiDungRepository
     {
-        IEnumerable<NguoiDung> GetNguoiDungs(string sortBy);
-       
+        IEnumerable<NguoiDungViewModel> GetNguoiDungs(string sortBy);
+        IEnumerable<NguoiDungViewModel> GetNguoiDungByNames(string searchName, int userType, string sortBy);
     }
 }

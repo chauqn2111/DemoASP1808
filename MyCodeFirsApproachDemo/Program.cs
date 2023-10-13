@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.LoginPath = "/Admin/Account/Login";
-    options.ReturnUrlParameter = "returnUrl";
+    //options.ReturnUrlParameter = "returnUrl";
 }).AddCookie("Admin", options =>
 {
     options.LoginPath = new PathString("/Admin/Account/Login");

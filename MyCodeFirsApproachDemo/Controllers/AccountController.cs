@@ -12,6 +12,7 @@ namespace MyCodeFirstApproach.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
+
         public IActionResult Login(string ReturnUrl = "")
         {
             ViewData["Title"] = "Đăng nhập";

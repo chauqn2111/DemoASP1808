@@ -164,8 +164,11 @@
     </div>
 </div>
 @section Scripts{
+    @{
+        DateTime crurenDate = DateTime.Now;
+    }
      <script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
-        <script src="~/admin/js/controller/customercontroler.js"></script>
+        <script src="~/admin/js/controller/customercontroler.js?@crurenDate"></script>
     <script type="text/javascript">
         function DisplayProgressMessage(ctl, msg) {
             //if use the submit button, you can use event.preventDefault to prevent the default submit form behavior.
@@ -179,7 +182,7 @@
             //submit the form.
             setTimeout(function () {
                 $("form").submit();
-            }, 5000);
+            }, 1000);
             return true;
         }
     </script>
